@@ -85,7 +85,7 @@ namespace RestAPIStudyCase.Controllers
             try
             {
                 await _course.Delete(id.ToString());
-                return Ok($"delete data id {id} berhasil");
+                return Ok($"delete data course id {id} berhasil");
             }
             catch (Exception ex)
             {

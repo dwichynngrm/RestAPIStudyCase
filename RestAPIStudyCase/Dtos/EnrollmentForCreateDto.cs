@@ -10,6 +10,6 @@ namespace RestAPIStudyCase.Dtos
         [Required]
         public int StudentId { get; set; }
         [Required]
-        public string Grade { get; set; }
+        public int Grade { get; set; }
     }
 }

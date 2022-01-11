@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RestAPIStudyCase.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "student")]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : ControllerBase
@@ -24,7 +24,7 @@ namespace RestAPIStudyCase.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        [Authorize(Roles = "student")]
+     
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudentDto>>> Get()
         {
@@ -56,7 +56,6 @@ namespace RestAPIStudyCase.Controllers
             return Ok(_mapper.Map<StudentDto>(result));
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<ActionResult<StudentDto>> Post([FromBody] StudentForCreateDto studentforCreateDto)
         {
@@ -90,6 +89,7 @@ namespace RestAPIStudyCase.Controllers
             }
         }
 
+        [Authorize(Roles = "admin, student")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

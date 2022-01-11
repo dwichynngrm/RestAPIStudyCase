@@ -33,7 +33,7 @@ namespace RestAPIStudyCase.Data
         public async Task<IEnumerable<Enrollment>> GetAll()
         {
             var results = await _db.Enrollments.Include(e => e.Student)
-                .Include(e => e.Course).AsNoTracking().ToListAsync();
+                .Include(e => e.Course).ToListAsync();
 
 
             return results;

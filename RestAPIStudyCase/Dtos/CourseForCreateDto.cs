@@ -16,7 +16,7 @@ namespace RestAPIStudyCase.Dtos
             if (CourseName.Length >= 50)
             {
                 yield return new ValidationResult("Course Name maksimal 50 karakter",
-                    new[] { "Title" });
+                    new[] { "Course Name" });
             }
 
             if (Credits >= 10)

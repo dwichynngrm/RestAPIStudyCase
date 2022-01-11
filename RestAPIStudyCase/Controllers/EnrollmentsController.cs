@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestAPIStudyCase.Data;
@@ -23,33 +24,35 @@ namespace RestAPIStudyCase.Controllers
         }
 
         // GET: api/<EnrollmentsController>
+        [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<Enrollment>> Get()
+        public async Task<ActionResult<IEnumerable<EnrollmentDto>>> Get()
         {
             var results = await _enrollment.GetAll();
-            return results;
+            return Ok(_mapper.Map<IEnumerable<EnrollmentDto>>(results));
         }
 
         // GET api/<EnrollmentsController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Enrollment>> GetById(int id)
+        public async Task<ActionResult<EnrollmentDto>> Get(int id)
         {
             var result = await _enrollment.GetById(id.ToString());
             if (result == null)
                 return NotFound();
 
-            return Ok(result);
+            return Ok(_mapper.Map<EnrollmentDto>(result));
         }
 
         // POST api/<EnrollmentsController>
         [HttpPost]
-        public async Task<ActionResult<Enrollment>> Post([FromBody] EnrollmentForCreateDto enrollmentforCreateDto)
+        public async Task<ActionResult<Enrollment>> Post([FromBody] EnrollmentForCreateDto enrollmentForCreateDto)
         {
             try
             {
-                var enrollment = _mapper.Map<Models.Enrollment>(enrollmentforCreateDto);
+                var enrollment = _mapper.Map<Models.Enrollment>(enrollmentForCreateDto);
                 var result = await _enrollment.Insert(enrollment);
-                return Ok(result);
+                var enrollmentdto = _mapper.Map<Dtos.EnrollmentDto>(result);
+                return Ok(enrollmentdto);
             }
             catch (Exception ex)
             {
@@ -63,9 +66,10 @@ namespace RestAPIStudyCase.Controllers
         {
             try
             {
-                var course = _mapper.Map<Models.Enrollment>(enrollmentToCreateDto);
-                var result = await _enrollment.Update(id.ToString(), course);
-                return Ok(result);
+                var enrollment = _mapper.Map<Models.Enrollment>(enrollmentToCreateDto);
+                var result = await _enrollment.Update(id.ToString(), enrollment);
+                var enrollmentdto = _mapper.Map<Dtos.EnrollmentDto>(result);
+                return Ok(enrollmentdto);
             }
             catch (Exception ex)
             {
@@ -80,7 +84,7 @@ namespace RestAPIStudyCase.Controllers
             try
             {
                 await _enrollment.Delete(id.ToString());
-                return Ok($"delete data id {id} berhasil");
+                return Ok($"delete data enrollment id {id} berhasil");
             }
             catch (Exception ex)
             {

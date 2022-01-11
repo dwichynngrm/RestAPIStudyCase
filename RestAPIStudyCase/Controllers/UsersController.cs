@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestAPIStudyCase.Data;
 using RestAPIStudyCase.Dtos;
 using RestAPIStudyCase.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -62,24 +63,31 @@ namespace RestAPIStudyCase.Controllers
         }
 
         [HttpPost("UserInRole")]
-        public async Task<ActionResult> AddUserToRole(string username, string role)
+        public async Task<ActionResult> AddUsersRole(string username, string role)
         {
             try
             {
                 await _user.AddUserToRole(username, role);
-                return Ok($"Berhasil menambahkan user {username} ke role {role}");
+                return Ok($"Update role user {username} berhasil");
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpGet("RolesByUser/{username}")]
-        public async Task<ActionResult<List<string>>> GetRolesByUser(string username)
+        public async Task<ActionResult<List<string>>> GetRolesFromUser(string username)
         {
-            var results = await _user.GetRolesFromUser(username);
-            return Ok(results);
+            try
+            {
+                var results = await _user.GetRolesFromUser(username);
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
