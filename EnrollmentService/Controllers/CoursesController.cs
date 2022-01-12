@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace EnrollmentService.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CoursesController : ControllerBase
@@ -25,7 +26,7 @@ namespace EnrollmentService.Controllers
         }
         // GET: api/<CoursesController>
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CourseDto>>> Get()
         {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EnrollmentService.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase

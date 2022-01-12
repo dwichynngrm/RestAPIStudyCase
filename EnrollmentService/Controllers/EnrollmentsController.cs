@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace EnrollmentService.Controllers
 {
+    [Authorize(Roles = "admin, student")]
     [Route("api/[controller]")]
     [ApiController]
     public class EnrollmentsController : ControllerBase
@@ -33,6 +34,7 @@ namespace EnrollmentService.Controllers
             var results = await _enrollment.GetAll();
             return Ok(_mapper.Map<IEnumerable<EnrollmentDto>>(results));
         }
+
 
         // GET api/<EnrollmentsController>/5
         [HttpGet("{id}")]
