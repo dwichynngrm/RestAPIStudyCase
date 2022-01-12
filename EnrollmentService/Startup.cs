@@ -1,5 +1,6 @@
 using EnrollmentService.Data;
 using EnrollmentService.Helpers;
+using EnrollmentService.SyncHttpDataServices.Http;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -77,6 +78,8 @@ namespace EnrollmentService
                  .AddXmlDataContractSerializerFormatters();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddHttpClient<IEnrollmentDataClient, HttpEnrollmentDataClient>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -115,7 +118,7 @@ namespace EnrollmentService
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestAPIStudyCase v1"));
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -126,6 +129,6 @@ namespace EnrollmentService
             {
                 endpoints.MapControllers();
             });
-        }
+        }    
     }
 }

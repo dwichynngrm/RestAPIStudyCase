@@ -32,11 +32,11 @@ namespace EnrollmentService.SyncHttpDataServices.Http
             var response = await _httpClient.PostAsync(_configuration["PaymentService"], httpContent);
             if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine("--> Sync Post to Command Service Success -->");
+                Console.WriteLine("--> Sync Post to Enrollment Service Success -->");
             }
             else
             {
-                Console.WriteLine("--> Sync Post to Command Service Failed -->");
+                Console.WriteLine("--> Sync Post to Enrollment Service Failed -->");
             }
         }
     }

@@ -8,6 +8,6 @@ namespace PaymentService.Data
 {
     public interface IEnrollment
     {
-        Task CreateEnrollemnt(Enrollment enrollment);
+        Task EnrollemntCreate(Enrollment enrollment);
     }
 }

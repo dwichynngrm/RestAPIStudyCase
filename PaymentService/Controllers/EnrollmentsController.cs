@@ -24,12 +24,12 @@ namespace PaymentService.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateEnrollment(EnrollmentCreateDto enrollment)
+        public async Task<ActionResult> EnrollmentCreate(EnrollmentCreateDto enrollment)
         {
             try
             {
                  var enroll = _mapper.Map<Enrollment>(enrollment);
-                 await _enrollment.CreateEnrollemnt(enroll);
+                 await _enrollment.EnrollemntCreate(enroll);
                  return Ok($"Data enrollment StudentId: {enrollment.StudentId} dan CourseId: {enrollment.CourseId} berhasil ditambahkan");
             }
             catch (Exception ex)
