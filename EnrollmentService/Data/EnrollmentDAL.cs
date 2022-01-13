@@ -15,13 +15,49 @@ namespace EnrollmentService.Data
             _db = db;
         }
 
-        public async Task<Enrollment> CreateEnrollment(Enrollment enrol)
+        
+
+        public async Task Delete(string id)
         {
             try
             {
-                _db.Enrollments.Add(enrol);
+                var result = await GetById(id);
+                if (result == null) throw new Exception($"Data course {id} tidak ditemukan !");
+                _db.Enrollments.Remove(result);
                 await _db.SaveChangesAsync();
-                return enrol;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                throw new Exception($"Error: {dbEx.Message}");
+            }
+        }
+
+        public async Task<IEnumerable<Enrollment>> GetAll()
+        {
+            var results = await _db.Enrollments.Include(e => e.Student)
+               .Include(e => e.Course).AsNoTracking().ToListAsync();
+            return results;
+        }
+
+        public async  Task<Enrollment> GetById(string id)
+        {
+            var result = await(from c in _db.Enrollments
+                               where c.EnrollmentId == Convert.ToInt32(id)
+                               select c).SingleOrDefaultAsync();
+            if (result == null) throw new Exception($"Data id {id} tidak ditemukan !");
+
+            return result;
+        }
+
+       
+
+        public async Task<Enrollment> Insert(Enrollment obj)
+        {
+            try
+            {
+                _db.Enrollments.Add(obj);
+                await _db.SaveChangesAsync();
+                return obj;
             }
             catch (DbUpdateException dbEx)
             {
@@ -30,25 +66,23 @@ namespace EnrollmentService.Data
         }
 
        
-        public IEnumerable<Enrollment> GetAllEnrollment()
+
+        public async Task<Enrollment> Update(string id, Enrollment obj)
         {
-            return _db.Enrollments.ToList();
+            try
+            {
+                var result = await GetById(id);
+                if (result == null) throw new Exception($"data course id {id} tidak ditemukan");
+                result.CourseId = obj.CourseId;
+                result.StudentId = obj.StudentId;
+                result.InvoicePayment = obj.InvoicePayment;
+                await _db.SaveChangesAsync();
+                return result;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                throw new Exception($"Error: {dbEx.Message}");
+            }
         }
-
-     
-
-        public Enrollment GetEnrollmentById(int id)
-        {
-            return _db.Enrollments.FirstOrDefault(p => p.EnrollmentId == id);
-        }
-
-       
-
-        public bool SaveChanges()
-        {
-            return (_db.SaveChanges() >= 0);
-        }
-
-       
     }
 }

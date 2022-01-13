@@ -1,17 +1,13 @@
-using PaymentService.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using PaymentService.Models;
 
 namespace PaymentService.Dtos
 {
-    public class EnrollmentCreateDto
+    public class EnrollmentDto
     {
+        public int Id { get; set; }
         public int CourseId { get; set; }
         public int StudentId { get; set; }
         public Grade? Grade { get; set; }
         public float? InvoicePayment { get; set; }
-
     }
 }

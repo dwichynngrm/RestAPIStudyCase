@@ -1,15 +1,10 @@
 ﻿using EnrollmentService.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace EnrollmentService.Data
 {
-    public interface IEnrollment 
+    public interface IEnrollment : ICrud<Enrollment>
     {
-        bool SaveChanges();
-        IEnumerable<Enrollment> GetAllEnrollment();
-        Enrollment GetEnrollmentById(int id);
-        Task<Enrollment> CreateEnrollment(Enrollment enrol);
+       
 
     }
 }

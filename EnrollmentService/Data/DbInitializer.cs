@@ -49,15 +49,15 @@ namespace EnrollmentService.Data
 
             var enrollments = new Enrollment[]
             {
-                new Enrollment{StudentId=1,CourseId=1,Grade=Grade.A},
-                new Enrollment{StudentId=1,CourseId=2,Grade=Grade.B},
-                new Enrollment{StudentId=1,CourseId=3,Grade=Grade.C},
-                new Enrollment{StudentId=2,CourseId=1,Grade=Grade.C},
-                new Enrollment{StudentId=2,CourseId=2,Grade=Grade.C},
-                new Enrollment{StudentId=2,CourseId=3,Grade=Grade.C},
-                new Enrollment{StudentId=3,CourseId=1,Grade=Grade.A},
-                new Enrollment{StudentId=3,CourseId=2,Grade=Grade.B},
-                new Enrollment{StudentId=3,CourseId=3,Grade=Grade.C }
+                new Enrollment{StudentId=1,CourseId=1,Grade=Grade.A, InvoicePayment=300},
+                new Enrollment{StudentId=1,CourseId=2,Grade=Grade.B, InvoicePayment=800},
+                new Enrollment{StudentId=1,CourseId=3,Grade=Grade.C, InvoicePayment=200},
+                new Enrollment{StudentId=2,CourseId=1,Grade=Grade.C, InvoicePayment=300},
+                new Enrollment{StudentId=2,CourseId=2,Grade=Grade.C, InvoicePayment=500},
+                new Enrollment{StudentId=2,CourseId=3,Grade=Grade.C, InvoicePayment=100},
+                new Enrollment{StudentId=3,CourseId=1,Grade=Grade.A, InvoicePayment=300},
+                new Enrollment{StudentId=3,CourseId=2,Grade=Grade.B, InvoicePayment=200},
+                new Enrollment{StudentId=3,CourseId=3,Grade=Grade.C, InvoicePayment=100}
             };
 
             foreach (var e in enrollments)

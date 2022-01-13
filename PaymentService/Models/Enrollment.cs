@@ -1,18 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace PaymentService.Models
 {
-    public partial class Enrollment
+    public enum Grade
     {
+        A, B, C, D, E
+    }
+    public class Enrollment
+    {
+
         public int EnrollmentId { get; set; }
         public int CourseId { get; set; }
         public int StudentId { get; set; }
-        public int? Grade { get; set; }
+        public Grade? Grade { get; set; }
+        public float? InvoicePayment { get; set; }
 
-        public virtual Course Course { get; set; }
-        public virtual Student Student { get; set; }
+        [JsonIgnore]
+        public Course Course { get; set; }
+        [JsonIgnore]
+        public Student Student { get; set; }
     }
 }

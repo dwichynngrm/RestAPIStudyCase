@@ -11,5 +11,6 @@ namespace EnrollmentService.Dtos
         public int StudentId { get; set; }
 
         public Grade? Grade { get; set; }
+        public float? InvoicePayment { get; set; }
     }
 }

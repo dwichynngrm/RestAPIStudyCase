@@ -1,12 +1,15 @@
-﻿using EnrollmentService.Dtos;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using EnrollmentService.Dtos;
 using EnrollmentService.Models;
 
-namespace EnrollmentService.SyncHttpDataServices.Http
+namespace EnrollmentService.SyncDataServices.Http
 {
     public interface IPaymentDataClient
     {
-        Task CreateEnrollmentInPayment(EnrollmentDto enrol);
-
+        Task<object> SendEnrollmentToPayment(object jsonObject);
+        Task SendPostAsync(EnrollmentForCreateDto post);
     }
 }

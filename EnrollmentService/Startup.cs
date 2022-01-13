@@ -1,5 +1,6 @@
 using EnrollmentService.Data;
 using EnrollmentService.Helpers;
+using EnrollmentService.SyncDataServices.Http;
 using EnrollmentService.SyncHttpDataServices.Http;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

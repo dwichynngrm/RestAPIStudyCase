@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#nullable disable
+using System.ComponentModel.DataAnnotations;
 
 namespace PaymentService.Models
 {
-    public partial class Student
+    public class Student
     {
-        public Student()
-        {
-            Enrollments = new HashSet<Enrollment>();
-        }
-
+        [Key]
         public int StudentId { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
         public DateTime EnrollmentDate { get; set; }
 
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public ICollection<Enrollment> Enrollments { get; set; }
     }
 }
