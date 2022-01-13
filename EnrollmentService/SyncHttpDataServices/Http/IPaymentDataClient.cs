@@ -4,8 +4,9 @@ using EnrollmentService.Models;
 
 namespace EnrollmentService.SyncHttpDataServices.Http
 {
-    public interface IEnrollmentDataClient
+    public interface IPaymentDataClient
     {
-        Task CreateEnrollmentFromPaymentService(EnrollmentForCreateDto enrollment);
+        Task CreateEnrollmentInPayment(EnrollmentDto enrol);
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using EnrollmentService.ValidationAttributes;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EnrollmentService.Dtos
@@ -12,10 +13,13 @@ namespace EnrollmentService.Dtos
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Kolom Last Name harus diisi")]
-        [MaxLength(20, ErrorMessage = "Tidak bolej lebih dari 20 karakter")]
+        [MaxLength(20, ErrorMessage = "Tidak boleh lebih dari 20 karakter")]
         public string LastName { get; set; }
 
         [Required]
         public DateTime EnrollmentDate { get; set; }
+
+        
     }
+
 }

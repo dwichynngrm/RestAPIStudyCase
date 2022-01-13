@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace EnrollmentService
@@ -71,19 +72,21 @@ namespace EnrollmentService
             services.AddScoped<IStudent, StudentDAL>();
             services.AddScoped<ICourse, CourseDAL>();
             services.AddScoped<IEnrollment, EnrollmentDAL>();
-            services.AddScoped<IUser, UserDAL>();
-
-            services.AddControllers().AddNewtonsoftJson(options =>
-             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
-                 .AddXmlDataContractSerializerFormatters();
-
+           // services.AddScoped<IUser, UserDAL>();
+            services.AddHttpClient<IPaymentDataClient, HttpPaymentDataClient>();
+            
+            
+            //services.AddControllers().AddNewtonsoftJson(options =>
+            // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+            //     .AddXmlDataContractSerializerFormatters();
+            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddHttpClient<IEnrollmentDataClient, HttpEnrollmentDataClient>();
+            
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestAPIStudyCase", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EnrollmentService", Version = "v1" });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
                 var securitySchema = new OpenApiSecurityScheme
                 {

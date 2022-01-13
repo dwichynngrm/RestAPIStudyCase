@@ -10,6 +10,6 @@ namespace EnrollmentService.Dtos
 
         public int StudentId { get; set; }
 
-        public int Grade { get; set; }
+        public Grade? Grade { get; set; }
     }
 }

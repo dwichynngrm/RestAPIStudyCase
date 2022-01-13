@@ -15,14 +15,13 @@ namespace EnrollmentService.Data
             _db = db;
         }
 
-        public async Task Delete(string id)
+        public async Task<Enrollment> CreateEnrollment(Enrollment enrol)
         {
-            var result = await GetById(id);
-            if (result == null) throw new Exception("Data tidak ditemukan !");
             try
             {
-                _db.Enrollments.Remove(result);
+                _db.Enrollments.Add(enrol);
                 await _db.SaveChangesAsync();
+                return enrol;
             }
             catch (DbUpdateException dbEx)
             {
@@ -30,55 +29,26 @@ namespace EnrollmentService.Data
             }
         }
 
-        public async Task<IEnumerable<Enrollment>> GetAll()
+       
+        public IEnumerable<Enrollment> GetAllEnrollment()
         {
-            var results = await _db.Enrollments.Include(e => e.Student)
-                .Include(e => e.Course).ToListAsync();
-
-
-            return results;
+            return _db.Enrollments.ToList();
         }
 
-        public async Task<Enrollment> GetById(string id)
+     
+
+        public Enrollment GetEnrollmentById(int id)
         {
-            var result = await _db.Enrollments.Where(s => s.EnrollmentId == Convert.ToInt32(id)).SingleOrDefaultAsync();
-            if (result != null)
-                return result;
-            else
-                throw new Exception("Data tidak ditemukan !");
+            return _db.Enrollments.FirstOrDefault(p => p.EnrollmentId == id);
         }
 
-        public async Task<Enrollment> Insert(Enrollment obj)
+       
+
+        public bool SaveChanges()
         {
-            try
-            {
-                _db.Enrollments.Add(obj);
-                await _db.SaveChangesAsync();
-                return obj;
-            }
-            catch (DbUpdateException dbEx)
-            {
-                throw new Exception($"Error: {dbEx.Message}");
-            }
+            return (_db.SaveChanges() >= 0);
         }
 
-        public async Task<Enrollment> Update(string id, Enrollment obj)
-        {
-            try
-            {
-                var result = await GetById(id);
-                if (result == null) throw new Exception($"data enrollment id {id} tidak ditemukan");
-                result.CourseId = obj.CourseId;
-                result.StudentId = obj.StudentId;
-                result.Grade = obj.Grade;
-                await _db.SaveChangesAsync();
-                obj.EnrollmentId = Convert.ToInt32(id);
-                return obj;
-            }
-            catch (DbUpdateException dbEx)
-            {
-                throw new Exception($"Error: {dbEx.Message}");
-            }
-        }
+       
     }
 }
