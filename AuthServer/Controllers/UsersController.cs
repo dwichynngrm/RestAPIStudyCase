@@ -96,7 +96,7 @@ namespace AuthServer.Controllers
         {
             try
             {
-                var user = await _user.Authenticate(createUserDto.Username, createUserDto.Password);
+                var user = await _user.Authenticate(createUserDto);
                 if (user == null)
                     return BadRequest("username/password tidak tepat");
                 return Ok(user);

@@ -13,6 +13,6 @@ namespace AuthServer.Data
         IEnumerable<CreateRoleDto> GetRoles();
         Task AddUserToRole(string username, string role);
         Task<List<string>> GetRolesFromUser(string username);
-        Task<User> Authenticate(string username, string password);
+        Task<User> Authenticate(CreateUserDto createuserDto);
     }
 }

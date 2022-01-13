@@ -56,21 +56,21 @@ namespace AuthServer.Data
             }
         }
 
-        public async Task<User> Authenticate(string username, string password)
+        public async Task<User> Authenticate(CreateUserDto createuserDto)
         {
             var userFind = await _userManager.CheckPasswordAsync(
-                await _userManager.FindByNameAsync(username), password);
+                await _userManager.FindByNameAsync(createuserDto.Username), createuserDto.Password);
             if (!userFind)
                 return null;
 
             var user = new User
             {
-                Username = username
+                Username = createuserDto.Username
             };
 
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Name, user.Username));
-            var roles = await GetRolesFromUser(username);
+            var roles = await GetRolesFromUser(createuserDto.Username);
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
