@@ -51,30 +51,17 @@ namespace EnrollmentService.Controllers
 
         // POST api/<EnrollmentsController>
         [HttpPost]
-        public async Task<ActionResult<EnrollmentDto>> Post([FromBody] EnrollmentForCreateDto enrollmentCreateDto)
+        public async Task<ActionResult> CreateEnrollment(EnrollmentForCreateDto enrollmentDto)
         {
-            var enrollment = _mapper.Map<Enrollment>(enrollmentCreateDto);
-            //var result = await _enrollment.Insert(enrollment);
-            var dtos = _mapper.Map<EnrollmentDto>(enrollment);
-
-            var post = new EnrollmentForCreateDto
-            {
-                CourseId = enrollmentCreateDto.CourseId,
-                StudentId = enrollmentCreateDto.StudentId,
-                InvoicePayment = enrollmentCreateDto.InvoicePayment
-            };
             try
             {
-                await _dataClient.SendPostAsync(post);
+                await _dataClient.CreateEnrollmentFromPaymentService(enrollmentDto);
+                return Ok("Success");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"--> Could not send synchronously: {ex.Message}");
+                return BadRequest(ex.Message);
             }
-
-            // return CreatedAtRoute(nameof(GetEnrollmentById),
-            // new {Id=dtos.Id},dtos);
-            return Ok(dtos);
         }
 
         // DELETE api/<EnrollmentsController>/5

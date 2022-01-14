@@ -22,37 +22,25 @@ namespace EnrollmentService.SyncHttpDataServices.Http
             _httpClient = httpClient;
             _configuration = configuration;
         }
-        public async  Task<object> SendEnrollmentToPayment(object jsonObject)
+
+        public async Task CreateEnrollmentFromPaymentService(EnrollmentForCreateDto enrollment)
         {
             var httpContent = new StringContent(
-               System.Text.Json.JsonSerializer.Serialize(jsonObject),
-               Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsJsonAsync(_configuration["PaymentService"],
-                httpContent);
+                JsonSerializer.Serialize(enrollment),
+                Encoding.UTF8, "application/json"
+            );
+
+            var response = await _httpClient.PostAsync(_configuration["PaymentService"], httpContent);
             if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine("--> Sync POST to PaymentService was OK !");
+                Console.WriteLine("--> Sync Post to Payment Service Success -->");
             }
             else
             {
-                Console.WriteLine("--> Sync POST to PaymentService failed");
+                Console.WriteLine("--> Sync Post to Payment Service Failed -->");
             }
-            return null;
         }
 
-        public async Task SendPostAsync(EnrollmentForCreateDto post)
-        {
-            var myContent = JsonSerializer.Serialize(post);
-            var data = new StringContent(myContent, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync(_configuration[$"PaymentService"], data);
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("--> Sync POST to PaymentService was OK !");
-            }
-            else
-            {
-                Console.WriteLine("--> Sync POST to PaymentService failed");
-            }
-        }
+
     }
 }

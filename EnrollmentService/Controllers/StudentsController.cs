@@ -29,18 +29,6 @@ namespace EnrollmentService.Controllers
         public async Task<ActionResult<IEnumerable<StudentDto>>> Get()
         {
             var students = await _student.GetAll();
-
-            /*List<StudentDto> lstStudentDto = new List<StudentDto>();
-            foreach (var student in students)
-            {
-                lstStudentDto.Add(new StudentDto
-                {
-                    ID = student.ID,
-                    Name = $"{student.FirstName} {student.LastName}",
-                    EnrollmentDate = student.EnrollmentDate
-                });
-            }*/
-
             var dtos = _mapper.Map<IEnumerable<StudentDto>>(students);
             return Ok(dtos);
         }
