@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "RestAPIStudyCase": {
+    "EnrollmentService": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
