@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-  - host: devbootcamp.com
+  - host: studycase.com
     http:
       paths:
       - path: /api/enrollments
@@ -17,10 +17,17 @@ spec:
             name: enrollment-clusterip-srv
             port: 
               number: 80
-      - path: /api/p/platforms
+      - path: /api/p/enrollments
         pathType: Prefix
         backend:
           service:
             name: payment-clusterip-srv
+            port:
+              number: 80
+      - path: /api/users
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-clusterip-srv
             port:
               number: 80
