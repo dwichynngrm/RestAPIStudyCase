@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PaymentService.Controllers;
 using PaymentService.Data;
 using PaymentService.Models;
 
@@ -29,13 +30,16 @@ namespace PaymentService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Case1DbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("LocalConnection")));
 
             
-            services.AddScoped<IEnrollment, EnrollmentDAL>();
+            services.AddScoped<IPayment, PaymentDAL>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddControllers();
+            // services.AddHttpClient<EnrollmentsController>();
+            services.AddControllers(); //.AddNewtonsoftJson(options =>
+           // options.SerializerSettings.ReferenceLoopHandling =
+           // Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PaymentService", Version = "v1" });
@@ -52,7 +56,7 @@ namespace PaymentService
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PaymentService v1"));
             }
 
-           app.UseHttpsRedirection();
+          // app.UseHttpsRedirection();
 
             app.UseRouting();
 

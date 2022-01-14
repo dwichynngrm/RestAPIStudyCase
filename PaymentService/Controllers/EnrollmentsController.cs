@@ -13,21 +13,15 @@ using PaymentService.Models;
 namespace PaymentService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/p/[controller]")]
     public class EnrollmentsController : ControllerBase
     {
         private IPayment _payment;
         private IMapper _mapper;
-        private HttpClient _httpClient;
-        private IConfiguration _configuration;
-
-        public EnrollmentsController(IPayment payment, IMapper mapper,
-            HttpClient httpClient, IConfiguration configuration)
+        public EnrollmentsController(IPayment payment, IMapper mapper)
         {
             _payment = payment;
             _mapper = mapper;
-            _httpClient = httpClient;
-            _configuration = configuration;
         }
 
         [HttpPost]
